@@ -3,14 +3,15 @@ FROM node:15.14.0-alpine3.10
 WORKDIR /app
 
 COPY package.json .
+COPY tsconfig.json .
 
 RUN npm install
+RUN npm install typescript -g
 
-RUN npm run build
+COPY . .
 
-ADD ./dist/ .
-ADD .env .
+RUN tsc
 
-EXPOSE 3000
+EXPOSE 5000
 
-CMD ["node", "server.js"]
+CMD ["node", "./dist/server.js"]
