@@ -5,7 +5,6 @@ import QueryResult from '../definitions/queryResult.definition';
 
 import MeasurementModel from '../models/measurement.model';
 import errorHandler from '../helpers/errorHandler';
-import measurement from '../models/measurement.model';
 
 export default class MeasurementController {
 
