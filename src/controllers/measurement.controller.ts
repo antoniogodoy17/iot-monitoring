@@ -10,21 +10,33 @@ import measurement from '../models/measurement.model';
 export default class MeasurementController {
 
     constructor() {}
-    
-    static saveManyMeasurements = async (req: Request, res: Response, next: NextFunction) => {
+
+    static getMeasurements = async (req: Request, res: Response, next: NextFunction) => {
         try {
             let result: QueryResult;
 
-            if (req.body.measurements) {
-                const measurements: Measurement[] = req.body.measurements.map((m: Measurement) => {
-                    const now = Date.now();
-
-                    return { ...m, sensedTime: now };
-                });
-                
-                await MeasurementModel.insertMany(measurements);
+            const measurements: Measurement[] = await MeasurementModel.find();
     
-                result = { message: 'Measurements successfully saved in DB.', data: {}, statusCode: 201 };
+            result = { message: 'Measurements successfully retrieved from DB.', data: { measurements }, statusCode: 201 };
+            
+            return res.status(201).send(result);
+        } catch (error: any) {
+            errorHandler(res, error);
+        }
+    }
+
+    static saveMeasurement = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            let result: QueryResult;
+
+            if (req.body.measurement) {
+                const now = Date.now();
+                const measurement: Measurement = new MeasurementModel(req.body.measurement);
+                measurement.sensedTime = now;
+                
+                await measurement.save();
+    
+                result = { message: 'Measurements successfully saved in DB.', data: { measurement }, statusCode: 201 };
                 
                 return res.status(201).send(result);
             }

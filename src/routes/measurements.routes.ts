@@ -4,6 +4,8 @@ import MeasurementController from '../controllers/measurement.controller';
 
 const router = Router();
 
-router.post('/', MeasurementController.saveManyMeasurements);
+router.get('/', MeasurementController.getMeasurements);
+
+router.post('/', MeasurementController.saveMeasurement);
 
 export default router;
