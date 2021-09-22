@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: iot-ingress
+  namespace: jose
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
@@ -9,17 +10,17 @@ spec:
   - host: jose.pjdtest.com
     http:
       paths:
-      - path: /app
-        pathType: Prefix
-        backend:
-          service:
-            name: iot-app
-            port:
-              number: 80
       - path: /api
         pathType: Prefix
         backend:
           service:
             name: iot-api
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: iot-app
             port:
               number: 80
