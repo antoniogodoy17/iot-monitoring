@@ -17,7 +17,7 @@ const app = express();
 app.use(cors());
 app.use(json());
 
-app.use('', routes);
+app.use('/api', routes);
 
 dbConnect();
 app.listen(PORT, () => {
